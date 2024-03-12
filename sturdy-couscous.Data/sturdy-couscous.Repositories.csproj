@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>sturdy_couscous.Data</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\sturdy-couscous.Models\sturdy-couscous.Models.csproj" />
+    <ProjectReference Include="..\sturdy-couscous.Services\sturdy-couscous.Services.csproj" />
+  </ItemGroup>
+</Project>

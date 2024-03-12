@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>sturdy_couscous.Models</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DTO\" />
+    <None Remove="Entities\" />
+    <None Remove="ViewModels\" />
+    <None Remove="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\" />
+    <Folder Include="Entities\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+</Project>
