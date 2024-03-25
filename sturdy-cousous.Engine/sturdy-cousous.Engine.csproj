@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>sturdy_cousous.Engine</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.10" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\sturdy-couscous.Models\sturdy-couscous.Models.csproj" />
+  </ItemGroup>
+</Project>

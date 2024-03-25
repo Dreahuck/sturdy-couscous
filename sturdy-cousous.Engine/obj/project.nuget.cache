@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "hRbmHhuZxm/eBjXMgEtvWhJTJgni2AT10ztxQ5j8LipCNX2qobLbaY6YsbX2jp1KHLSv8scj0g8J0kmxhCsEyw==",
+  "success": true,
+  "projectFilePath": "/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/sturdy-cousous.Engine.csproj",
+  "expectedPackageFiles": [
+    "/Users/mymac/.nuget/packages/system.linq.dynamic.core/1.3.10/system.linq.dynamic.core.1.3.10.nupkg.sha512",
+    "/Users/mymac/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.25/microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
+    "/Users/mymac/.nuget/packages/microsoft.netcore.app.ref/6.0.25/microsoft.netcore.app.ref.6.0.25.nupkg.sha512"
+  ],
+  "logs": []
+}

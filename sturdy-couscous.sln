@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sturdy-couscous.Repositorie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sturdy-couscous.Models", "sturdy-couscous.Models\sturdy-couscous.Models.csproj", "{E95B1D5A-7376-41EF-9033-447894DDACBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sturdy-cousous.Engine", "sturdy-cousous.Engine\sturdy-cousous.Engine.csproj", "{F0F855CE-3217-4423-96F1-FA3CE144E53B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sturdy-couscous.Tests", "sturdy-couscous.Tests\sturdy-couscous.Tests.csproj", "{DED34531-15F8-4243-BBC9-F4F7D918CF39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{E95B1D5A-7376-41EF-9033-447894DDACBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E95B1D5A-7376-41EF-9033-447894DDACBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E95B1D5A-7376-41EF-9033-447894DDACBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0F855CE-3217-4423-96F1-FA3CE144E53B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0F855CE-3217-4423-96F1-FA3CE144E53B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0F855CE-3217-4423-96F1-FA3CE144E53B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0F855CE-3217-4423-96F1-FA3CE144E53B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DED34531-15F8-4243-BBC9-F4F7D918CF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED34531-15F8-4243-BBC9-F4F7D918CF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED34531-15F8-4243-BBC9-F4F7D918CF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED34531-15F8-4243-BBC9-F4F7D918CF39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

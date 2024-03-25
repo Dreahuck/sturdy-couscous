@@ -1,0 +1,16 @@
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/bin/Debug/net6.0/sturdy-cousous.Engine.deps.json
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/bin/Debug/net6.0/sturdy-cousous.Engine.dll
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/bin/Debug/net6.0/sturdy-cousous.Engine.pdb
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/bin/Debug/net6.0/sturdy-couscous.Models.dll
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/bin/Debug/net6.0/sturdy-couscous.Models.pdb
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.csproj.AssemblyReference.cache
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.AssemblyInfoInputs.cache
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.AssemblyInfo.cs
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.csproj.CoreCompileInputs.cache
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.sourcelink.json
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.csproj.CopyComplete
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.dll
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/refint/sturdy-cousous.Engine.dll
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/sturdy-cousous.Engine.pdb
+/Users/mymac/Projects/sturdy-couscous/sturdy-cousous.Engine/obj/Debug/net6.0/ref/sturdy-cousous.Engine.dll
