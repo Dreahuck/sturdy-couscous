@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sturdy-cousous.Engine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+037ce1106582b49b4bb38916dbc9153d1f7cac7e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("sturdy-cousous.Engine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sturdy-cousous.Engine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

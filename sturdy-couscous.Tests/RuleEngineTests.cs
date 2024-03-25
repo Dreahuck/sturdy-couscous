@@ -37,5 +37,5 @@ public class RuleEngineTests
         var lambda = RuleEngine.CreateExpression(pattern);
         var isMonday = RuleEngine.CompileExpression(lambda);
         Assert.Equal(expectedResult, isMonday(context));
-    }
+    } 
 }
