@@ -1,6 +1,5 @@
-/Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/CoverletSourceRootsMapping
-/Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Microsoft.TestPlatform.PlatformAbstractions.dll
-/Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll
+/Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/CoverletSourceRootsMapping_sturdy-couscous.Tests
+/Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/xunit.runner.visualstudio.testadapter.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/xunit.runner.reporters.netcoreapp10.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/xunit.runner.utility.netcoreapp10.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/sturdy-couscous.Tests.deps.json
@@ -9,6 +8,7 @@
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/sturdy-couscous.Tests.pdb
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Microsoft.TestPlatform.CoreUtilities.dll
+/Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Microsoft.TestPlatform.PlatformAbstractions.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Microsoft.TestPlatform.CommunicationUtilities.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Microsoft.TestPlatform.CrossPlatEngine.dll
@@ -16,7 +16,6 @@
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Microsoft.VisualStudio.TestPlatform.Common.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/testhost.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/Newtonsoft.Json.dll
-/Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/NuGet.Frameworks.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/System.Linq.Dynamic.Core.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/xunit.abstractions.dll
 /Users/mymac/Projects/sturdy-couscous/sturdy-couscous.Tests/bin/Debug/net6.0/xunit.assert.dll
