@@ -1,0 +1,36 @@
+using System;
+using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
+
+public static class DateTimeExtensions
+{
+    public static bool EstLundi(this DateTime date)
+    {
+        return date.DayOfWeek == DayOfWeek.Monday;
+    }
+}
+
+// Exemple d'utilisation de ParseLambda pour convertir le string en Func<DateTime, bool>
+public static void Main(string[] args)
+{
+    var config = new ParsingConfig { CustomTypeProvider = new MyCustomTypeProvider() };
+    var parameter = Expression.Parameter(typeof(DateTime), "date");
+    var lambda = DynamicExpressionParser.ParseLambda(config, false, new[] { parameter }, typeof(bool), "date.EstLundi()");
+    Func<DateTime, bool> func = (Func<DateTime, bool>)lambda.Compile();
+
+    // Test de la fonction
+    DateTime date = DateTime.Now;
+    bool estLundi = func(date);
+    Console.WriteLine($"Est-ce que la date est un lundi? {estLundi}");
+}
+
+public class MyCustomTypeProvider : DefaultDynamicLinqCustomTypeProvider
+{
+    public override HashSet<Type> GetCustomTypes()
+    {
+        // Ajoutez votre classe d'extension ici
+        HashSet<Type> customTypes = base.GetCustomTypes();
+        customTypes.Add(typeof(DateTimeExtensions));
+        return customTypes;
+    }
+}
