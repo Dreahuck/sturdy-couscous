@@ -1,0 +1,45 @@
+
+	--Récupération des règles qui ont au moins 1 utilisation qui match avec les filtres précédents
+	SELECT DISTINCT R.IDE as Id, R.LIB as Libelle, R.PAT as Pattern FROM
+		RUL AS R 
+		INNER JOIN RUL_UTT AS RU
+			ON R.IDE = RU.RUL_IDE
+		INNER JOIN 
+			RUL_UTT_FLR AS RUF
+			ON RU.IDE = RUF.RUL_UTT_IDE
+		INNER JOIN
+			OPENJSON(@JSON_ARRAY) WITH( COD CHAR(3), VAL VARCHAR(25) ) AS FILTERS	
+			ON RUF.FLR_COD = FILTERS.COD
+		INNER JOIN dbo.RGP_FLR_UTT as RGPF  --Jointure avec la table de regroupement des filtres. 
+			ON RUF.RUL_UTT_IDE = RGPF.RUL_UTT_IDE 
+				AND RUF.RGP_FLR_IDE = RGPF.RGP_FLR_IDE
+				AND ( FILTERS.VAL = RGPF.VAL OR RGPF.VAL = '*' )  --Si dans le regroupement, on a une val à *, pas besoin de la valeur du filtre. 
+		WHERE R.ACF = 1 AND RU.ACF = 1	
+		GROUP BY R.IDE, R.LIB, R.PAT, RUF.RUL_UTT_IDE
+		HAVING COUNT(DISTINCT(RUF.FLR_COD)) = @NBRE_FILTRE --On vérifie qu'on a bien reçu autant de résultat que de filtre dans TVP. 
+
+    EXCEPT
+
+    	--Récupération des règles qui ont au moins 1 exception qui match avec les filtres précédents
+	SELECT DISTINCT R.IDE as Id, R.LIB as Libelle, R.PAT as Pattern FROM
+		RUL AS R 
+		INNER JOIN RUL_XPT AS RX
+			ON R.IDE = RX.RUL_IDE
+		INNER JOIN 
+			RUL_XPT_FLR AS RXF
+			ON RX.IDE = RXF.RUL_XPT_IDE
+		INNER JOIN
+			OPENJSON(@JSON_ARRAY) WITH( COD CHAR(3), VAL VARCHAR(25) ) AS FILTERS	
+			ON RXF.FLR_COD = FILTERS.COD
+		INNER JOIN RGP_FLR_XPT as RGPF  --Jointure avec la table de regroupement des filtres. 
+			ON RXF.RUL_XPT_IDE = RGPF.RUL_XPT_IDE 
+				AND RXF.RGP_FLR_IDE = RGPF.RGP_FLR_IDE
+				AND FILTERS.VAL = RGPF.VAL
+		WHERE R.ACF = 1 AND RX.ACF = 1	
+		GROUP BY R.IDE, R.LIB, R.PAT, RXF.RUL_XPT_IDE
+		--L'ensemble des critères d'une exception doivent être présent. On écarte les cas trivial  '*'
+		HAVING COUNT(DISTINCT(RXF.FLR_COD)) >= (SELECT COUNT(1)                                
+                                                FROM RUL_XPT_FLR AS COUNT_RXF
+												INNER JOIN RGP_FLR_XPT AS COUNT_RGP
+												ON COUNT_RXF.RGP_FLR_IDE = COUNT_RGP.IDE AND COUNT_RXF.RUL_XPT_IDE = COUNT_RGP.RUL_XPT_IDE
+                                                WHERE COUNT_RXF.RUL_XPT_IDE = RXF.RUL_XPT_IDE AND COUNT_RGP.VAL <> '*' ) 	
