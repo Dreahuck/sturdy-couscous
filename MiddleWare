@@ -14,8 +14,8 @@ public class FirstLoginMiddleware
         // Vérifier si c'est la première connexion
         if (IsFirstLogin(context))
         {
-            // Appeler l'API
-            await CallApiAsync();
+            // Appeler l'API de manière asynchrone sans attendre le résultat
+            Task.Run(() => CallApiAsync());
         }
 
         // Appeler le middleware suivant dans la chaîne
