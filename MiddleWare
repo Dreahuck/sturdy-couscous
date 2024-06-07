@@ -1,0 +1,38 @@
+public class FirstLoginMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public FirstLoginMiddleware(RequestDelegate next, IHttpClientFactory httpClientFactory)
+    {
+        _next = next;
+        _httpClientFactory = httpClientFactory;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // Vérifier si c'est la première connexion
+        if (IsFirstLogin(context))
+        {
+            // Appeler l'API
+            await CallApiAsync();
+        }
+
+        // Appeler le middleware suivant dans la chaîne
+        await _next(context);
+    }
+
+    private bool IsFirstLogin(HttpContext context)
+    {
+        // Logique pour déterminer si c'est la première connexion
+        // Par exemple, vérifier un cookie ou une session
+        return !context.Session.GetString("FirstLoginDone");
+    }
+
+    private async Task CallApiAsync()
+    {
+        var client = _httpClientFactory.CreateClient();
+        var response = await client.GetAsync("https://api.example.com/endpoint");
+        response.EnsureSuccessStatusCode();
+    }
+}
