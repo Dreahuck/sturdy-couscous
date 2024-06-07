@@ -1,0 +1,83 @@
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+public class CacheService : IHostedService, IDisposable
+{
+    private readonly ILogger<CacheService> _logger;
+    private Timer _timer;
+
+    public CacheService(ILogger<CacheService> logger)
+    {
+        _logger = logger;
+    }
+
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Service de cache démarré.");
+
+        // Initialiser le cache si vide
+        InitializeCache();
+
+        // Configurer le timer pour exécuter la tâche chaque jour à 7h du matin
+        var now = DateTime.Now;
+        var firstRun = new DateTime(now.Year, now.Month, now.Day, 7, 0, 0);
+        if (now > firstRun)
+        {
+            firstRun = firstRun.AddDays(1);
+        }
+        var initialDelay = firstRun - now;
+        var dailyInterval = TimeSpan.FromDays(1);
+
+        _timer = new Timer(UpdateCache, null, initialDelay, dailyInterval);
+
+        return Task.CompletedTask;
+    }
+
+    private void InitializeCache()
+    {
+        // Vérifier si le cache est vide et l'alimenter si nécessaire
+        if (IsCacheEmpty())
+        {
+            _logger.LogInformation("Le cache est vide. Initialisation du cache...");
+            // Code pour alimenter le cache
+            FillCache();
+        }
+    }
+
+    private void UpdateCache(object state)
+    {
+        _logger.LogInformation("Mise à jour quotidienne du cache à 7h du matin.");
+        // Code pour mettre à jour le cache
+        FillCache();
+    }
+
+    private bool IsCacheEmpty()
+    {
+        // Code pour vérifier si le cache est vide
+        // Retourner true si le cache est vide, sinon false
+        return true; // Exemple
+    }
+
+    private void FillCache()
+    {
+        // Code pour alimenter le cache
+        _logger.LogInformation("Cache alimenté.");
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Service de cache arrêté.");
+
+        _timer?.Change(Timeout.Infinite, 0);
+
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+}
