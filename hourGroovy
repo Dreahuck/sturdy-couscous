@@ -1,0 +1,47 @@
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Random
+
+// Fonction pour générer une liste d'heures aléatoires pour une journée donnée
+List<LocalTime> generateRandomTimes(int count) {
+    Random random = new Random()
+    List<LocalTime> randomTimes = []
+
+    for (int i = 0; i < count; i++) {
+        int randomHour = random.nextInt(24)
+        randomTimes.add(LocalTime.of(randomHour, 0))
+    }
+    
+    return randomTimes
+}
+
+// Fonction pour générer une liste de toutes les heures d'une journée
+List<LocalTime> generateAllHoursOfDay() {
+    List<LocalTime> allHours = []
+    for (int hour = 0; hour < 24; hour++) {
+        allHours.add(LocalTime.of(hour, 0))
+    }
+    return allHours
+}
+
+// Fonction principale
+void checkAbsentHours(List<LocalTime> randomTimes, List<LocalTime> allHours) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm")
+    List<String> result = []
+    
+    allHours.each { hour ->
+        if (!randomTimes.contains(hour)) {
+            result.add("(absent) " + hour.format(formatter))
+        } else {
+            result.add(hour.format(formatter))
+        }
+    }
+    
+    result.each { println it }
+}
+
+// Exemple d'utilisation
+List<LocalTime> randomTimes = generateRandomTimes(10) // Génère 10 heures aléatoires
+List<LocalTime> allHours = generateAllHoursOfDay()
+checkAbsentHours(randomTimes, allHours)
