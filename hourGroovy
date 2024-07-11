@@ -1,47 +1,17 @@
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.util.Random
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
-// Fonction pour générer une liste d'heures aléatoires pour une journée donnée
-List<LocalTime> generateRandomTimes(int count) {
-    Random random = new Random()
-    List<LocalTime> randomTimes = []
-
-    for (int i = 0; i < count; i++) {
-        int randomHour = random.nextInt(24)
-        randomTimes.add(LocalTime.of(randomHour, 0))
-    }
-    
-    return randomTimes
-}
-
-// Fonction pour générer une liste de toutes les heures d'une journée
-List<LocalTime> generateAllHoursOfDay() {
-    List<LocalTime> allHours = []
-    for (int hour = 0; hour < 24; hour++) {
-        allHours.add(LocalTime.of(hour, 0))
-    }
-    return allHours
-}
-
-// Fonction principale
-void checkAbsentHours(List<LocalTime> randomTimes, List<LocalTime> allHours) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm")
-    List<String> result = []
-    
-    allHours.each { hour ->
-        if (!randomTimes.contains(hour)) {
-            result.add("(absent) " + hour.format(formatter))
-        } else {
-            result.add(hour.format(formatter))
-        }
-    }
-    
-    result.each { println it }
+boolean comparerDateTime(String dateStr, int heure, int minutes) {
+    def maintenant = new Date() + 2 * 60 * 1000  // Date actuelle + 2 minutes
+    def sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+    def dateEntree = sdf.parse("${dateStr} ${heure}:${minutes}")
+    return dateEntree.after(maintenant)
 }
 
 // Exemple d'utilisation
-List<LocalTime> randomTimes = generateRandomTimes(10) // Génère 10 heures aléatoires
-List<LocalTime> allHours = generateAllHoursOfDay()
-checkAbsentHours(randomTimes, allHours)
+def dateStr = "2024-07-11"
+def heure = 12
+def minutes = 30
+
+boolean resultat = comparerDateTime(dateStr, heure, minutes)
+println "La date entrée est-elle après la date actuelle + 2 minutes ? ${resultat}"
