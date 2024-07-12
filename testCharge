@@ -12,7 +12,7 @@ $body = @{
 # Initialiser les variables pour le calcul du temps de réponse
 $totalTime = 0
 $iterations = 50
-$tasks = @()
+$jobs = @()
 
 # Fonction pour effectuer un appel API
 function Invoke-ApiCall {
@@ -28,17 +28,17 @@ function Invoke-ApiCall {
     return $elapsedTime
 }
 
-# Boucle pour créer des tâches asynchrones
+# Boucle pour créer des tâches en arrière-plan
 for ($i = 1; $i -le $iterations; $i++) {
-    $tasks += [powershell]::Create().AddScript({
+    $jobs += Start-Job -ScriptBlock {
         param ($Url, $Headers, $Body)
         Invoke-ApiCall -Url $Url -Headers $Headers -Body $Body
-    }).AddArgument($apiUrl).AddArgument($headers).AddArgument($body).BeginInvoke()
+    } -ArgumentList $apiUrl, $headers, $body
 }
 
 # Attendre que toutes les tâches soient terminées et calculer le temps total
-foreach ($task in $tasks) {
-    $elapsedTime = [powershell]::EndInvoke($task)
+foreach ($job in $jobs) {
+    $elapsedTime = Receive-Job -Job $job -Wait
     $totalTime += $elapsedTime
     Write-Output "Temps de réponse: $elapsedTime ms"
 }
