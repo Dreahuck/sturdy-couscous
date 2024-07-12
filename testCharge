@@ -1,0 +1,48 @@
+# Définir l'URL de l'API, le header et le body
+$apiUrl = "https://your-api-endpoint"
+$headers = @{
+    "Content-Type" = "application/json"
+    "Authorization" = "Bearer your_token"
+}
+$body = @{
+    "key1" = "value1"
+    "key2" = "value2"
+} | ConvertTo-Json
+
+# Initialiser les variables pour le calcul du temps de réponse
+$totalTime = 0
+$iterations = 50
+$tasks = @()
+
+# Fonction pour effectuer un appel API
+function Invoke-ApiCall {
+    param (
+        [string]$Url,
+        [hashtable]$Headers,
+        [string]$Body
+    )
+    $startTime = Get-Date
+    $response = Invoke-RestMethod -Uri $Url -Method Post -Headers $Headers -Body $Body
+    $endTime = Get-Date
+    $elapsedTime = ($endTime - $startTime).TotalMilliseconds
+    return $elapsedTime
+}
+
+# Boucle pour créer des tâches asynchrones
+for ($i = 1; $i -le $iterations; $i++) {
+    $tasks += [powershell]::Create().AddScript({
+        param ($Url, $Headers, $Body)
+        Invoke-ApiCall -Url $Url -Headers $Headers -Body $Body
+    }).AddArgument($apiUrl).AddArgument($headers).AddArgument($body).BeginInvoke()
+}
+
+# Attendre que toutes les tâches soient terminées et calculer le temps total
+foreach ($task in $tasks) {
+    $elapsedTime = [powershell]::EndInvoke($task)
+    $totalTime += $elapsedTime
+    Write-Output "Temps de réponse: $elapsedTime ms"
+}
+
+# Calculer et afficher le temps de réponse moyen
+$averageTime = $totalTime / $iterations
+Write-Output "Temps de réponse moyen: $averageTime ms"
