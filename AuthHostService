@@ -1,0 +1,44 @@
+public class AuthenticatedHostedService : IHostedService
+{
+    private readonly IServiceProvider _serviceProvider;
+
+    public AuthenticatedHostedService(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    public async Task StartAsync(CancellationToken cancellationToken)
+    {
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            var httpContextAccessor = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+            var cacheService = scope.ServiceProvider.GetRequiredService<ICacheService>();
+
+            // Créer des claims pour l'utilisateur
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, "HostedServiceUser"),
+                new Claim(ClaimTypes.Role, "Admin"),
+                // Ajoutez d'autres claims selon vos besoins
+            };
+
+            // Créer l'identité et le principal
+            var identity = new ClaimsIdentity(claims, "HostedServiceAuthentication");
+            var principal = new ClaimsPrincipal(identity);
+
+            // Attacher le principal au HttpContext actuel
+            httpContextAccessor.HttpContext = new DefaultHttpContext
+            {
+                User = principal
+            };
+
+            // Appeler un service nécessitant un utilisateur authentifié
+            await cacheService.PreloadCacheAsync();
+        }
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+}
