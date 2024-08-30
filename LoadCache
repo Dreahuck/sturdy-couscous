@@ -1,0 +1,161 @@
+Pour intégrer le préchargement du cache directement dans une application .NET 8, vous pouvez utiliser plusieurs techniques pour s'assurer que votre cache est rempli au démarrage de l'application. Voici une démarche générale pour y parvenir :
+
+### 1. Utiliser un **Hosted Service** pour le chargement du cache
+
+Un `HostedService` est un service d'arrière-plan qui s'exécute en même temps que votre application ASP.NET Core. Vous pouvez l'utiliser pour précharger votre cache lorsque l'application démarre.
+
+#### Étape 1 : Créez un service pour charger le cache
+```csharp
+public class CachePreloadService : IHostedService
+{
+    private readonly IServiceProvider _serviceProvider;
+
+    public CachePreloadService(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    public async Task StartAsync(CancellationToken cancellationToken)
+    {
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            var cacheService = scope.ServiceProvider.GetRequiredService<ICacheService>();
+            await cacheService.PreloadCacheAsync();
+        }
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        // Optionally implement clean-up logic here
+        return Task.CompletedTask;
+    }
+}
+```
+
+#### Étape 2 : Enregistrez le service dans `Program.cs`
+Dans votre fichier `Program.cs`, vous devez enregistrer le service pour qu'il s'exécute au démarrage de l'application :
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// Ajoutez le service de cache à l'injection de dépendances
+builder.Services.AddScoped<ICacheService, CacheService>();
+
+// Ajoutez le Hosted Service
+builder.Services.AddHostedService<CachePreloadService>();
+
+var app = builder.Build();
+
+app.Run();
+```
+
+### 2. Implémentation du service de cache
+
+Le service de cache lui-même doit implémenter la logique de préchargement. Voici un exemple simple d'un service de cache :
+
+```csharp
+public interface ICacheService
+{
+    Task PreloadCacheAsync();
+    // Autres méthodes pour interagir avec le cache
+}
+
+public class CacheService : ICacheService
+{
+    private readonly IMemoryCache _cache;
+
+    public CacheService(IMemoryCache cache)
+    {
+        _cache = cache;
+    }
+
+    public async Task PreloadCacheAsync()
+    {
+        // Exemple de chargement du cache au démarrage
+        var data = await LoadDataFromDatabaseOrApiAsync();
+        _cache.Set("CachedDataKey", data);
+    }
+
+    private Task<List<MyData>> LoadDataFromDatabaseOrApiAsync()
+    {
+        // Implémentez ici la logique pour charger les données à mettre en cache
+        return Task.FromResult(new List<MyData>());
+    }
+}
+```
+
+### 3. Vérification de l'état de l'application avant de répondre aux requêtes
+
+Pour vous assurer que l'application ne répondra pas aux requêtes tant que le cache n'est pas préchargé, vous pouvez utiliser une `Readiness Probe` dans Kubernetes ou un middleware qui vérifie que le cache est chargé.
+
+#### Option 1 : Utiliser un middleware pour vérifier l'état de préparation
+Si vous voulez éviter de configurer une `Readiness Probe` dans Kubernetes, vous pouvez implémenter un middleware simple pour vérifier si le cache est prêt avant de traiter les requêtes.
+
+```csharp
+public class CacheReadyMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ICacheService _cacheService;
+
+    public CacheReadyMiddleware(RequestDelegate next, ICacheService cacheService)
+    {
+        _next = next;
+        _cacheService = cacheService;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        if (!_cacheService.IsCacheReady())
+        {
+            context.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
+            await context.Response.WriteAsync("Cache not ready");
+            return;
+        }
+
+        await _next(context);
+    }
+}
+```
+
+Enregistrez ce middleware dans `Program.cs` :
+
+```csharp
+var app = builder.Build();
+
+app.UseMiddleware<CacheReadyMiddleware>();
+
+app.Run();
+```
+
+### 4. Configurer une `Readiness Probe` dans Kubernetes
+
+Si vous utilisez Kubernetes, vous pouvez configurer une `Readiness Probe` pour s'assurer que le pod n'est pas marqué comme "ready" tant que le cache n'est pas chargé.
+
+Ajoutez une `Readiness Probe` dans votre manifeste Kubernetes, qui vérifie un point de terminaison (endpoint) indiquant si le cache est prêt :
+
+```yaml
+readinessProbe:
+  httpGet:
+    path: /health/ready
+    port: 80
+  initialDelaySeconds: 10
+  periodSeconds: 5
+```
+
+Et implémentez ce point de terminaison dans votre application :
+
+```csharp
+app.MapGet("/health/ready", (ICacheService cacheService) =>
+{
+    if (cacheService.IsCacheReady())
+    {
+        return Results.Ok("Ready");
+    }
+
+    return Results.StatusCode(503);
+});
+```
+
+### Conclusion
+
+En intégrant le chargement du cache dans votre application .NET 8 via un `HostedService` et en utilisant des techniques telles qu'une `Readiness Probe` ou un middleware, vous vous assurez que votre application est prête et fonctionnelle avant de commencer à répondre aux requêtes. Cela simplifie également la gestion des déploiements en rendant votre application autonome dans son processus de préparation.
